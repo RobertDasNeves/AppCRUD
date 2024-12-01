@@ -26,7 +26,7 @@
         style="background: linear-gradient(90deg, #36c6c6, #000080); position: fixed; z-index: 1;">
         <header class="d-flex align-items-center justify-content-center justify-content-md-between mb-4 border-bottom">
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-secondary" style="color: white; font-size: 30px;">AMA TEAmigos</a>
+                <li><a href="/" class="nav-link px-2 link-secondary" title="Clique para ser enviado a página principal." style="color: white; font-size: 30px;">AMA TEAmigos</a>
                 </li>
                 <li><a href="/calendar" class="nav-link px-2" style="color: white;"><i class="bi bi-calendar2"
                             style="font-size: 30px; color: white; position: absolute; margin-left: 900px;"></i>
@@ -41,14 +41,14 @@
                 <form id="myForm" action="/" method="POST">
                     <div style="margin-top: 100px;">
                         <label for="cadIden">Identificador: </label>
-                        <input class="form-control" type="text" name="cadIden" id="cadIden" required
+                        <input class="form-control" type="text" name="cadIden" id="cadIden" placeholder="Digite um CPF ou CNPJ. ex.: 00000000000" required
                             value="<%= body?.cadIden || '' %>" pattern="\d{11}|\d{14}"
                             title="Digite um CPF (11 dígitos) ou CNPJ (14 dígitos)">
                         <span id="cadIdenError" class="error"></span><br>
                     </div>
                     <div> 
                         <label for="cadName">Nome completo: </label>
-                        <input class="form-control" type="text" name="cadName" id="cadName" required value="<%=body.cadName%>"><br>
+                        <input class="form-control" type="text" name="cadName" id="cadName" placeholder="Digite o nome completo" required value="<%=body.cadName%>"><br>
                     </div>
                     <div> 
                         <label for="cadNascimento">Data de nascimento: </label>
@@ -66,7 +66,7 @@
                     </div>
                     <div> 
                         <label for="cadTel">Telefone: </label>
-                        <input class="form-control" type="tel" name="cadTel" id="cadTel" required value="<%=body.cadTel%>"><br>
+                        <input class="form-control" type="tel" name="cadTel" id="cadTel" placeholder="Ex.:47900000000" required value="<%=body.cadTel%>"><br>
                     </div>
                     <div> 
                         <label for="cadAf1">Afiliação 1: </label>

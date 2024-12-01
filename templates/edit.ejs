@@ -22,12 +22,12 @@
 <body>
         <div>
                 <form action="/edit/<%=body.id%>" method="POST">
-                    <label for="cadIden">Identificador: </label><input class="form-control" type="text" name="cadIden" id="cadIden" required value="<%=body.cadIden%>" disabled><br>
-                    <label for="cadName">Nome completo: </label><input class="form-control" type="text" name="cadName" id="cadName" required value="<%=body.cadName%>"><br>
+                    <label for="cadIden">Identificador: </label><input class="form-control" type="text" name="cadIden" id="cadIden" placeholder="Digite um CPF ou CNPJ. ex.: 00000000000" required value="<%=body.cadIden%>" disabled><br>
+                    <label for="cadName">Nome completo: </label><input class="form-control" type="text" name="cadName" id="cadName" placeholder="Digite o nome completo" required value="<%=body.cadName%>"><br>
                     <label for="cadNascimento">Data de nascimento: </label><input class="form-control" type="date" name="cadNascimento" id="cadNascimento" required value="<%= new Date(body.cadNascimento).toISOString().split('T')[0] %>" max="<%= new Date().toISOString().split('T')[0] %>><br>
                     <label for="cadEnd">Endereço: </label><input class="form-control" type="text" name="cadEnd" id="cadEnd" required value="<%=body.cadEnd%>"><br>
-                    <label for="cadEmail">Email: </label><input class="form-control" type="email" name="cadEmail" id="cadEmail" value="<%=body.cadEmail%>"><br>
-                    <label for="cadTel">Telefone: </label><input class="form-control" type="tel" name="cadTel" id="cadTel" required value="<%=body.cadTel%>"><br>
+                    <label for="cadEmail">Email: </label><input class="form-control" type="email" name="cadEmail" id="cadEmail" placeholder="exemplo@dominio.com" value="<%=body.cadEmail%>"><br>
+                    <label for="cadTel">Telefone: </label><input class="form-control" type="tel" name="cadTel" id="cadTel" placeholder="Ex.:47900000000" required value="<%=body.cadTel%>"><br>
                     <label for="cadAf1">Afiliação 1: </label><input class="form-control" type="text" name="cadAf1" id="cadAf1" required value="<%=body.cadAf1%>"><br>
                     <label for="cadAf2">Afiliação 2: </label><input class="form-control" type="text" name="cadAf2" id="cadAf2" value="<%=body.cadAf2%>"><br>
                     <label for="cadObs">Observação: </label><input class="form-control" type="text" name="cadObs" id="cadObs" value="<%=body.cadObs%>"><br>
