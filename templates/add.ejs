@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>AMA TEAmigos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        label {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body style="margin: 0;">
+    <div class="container-fluid"
+        style="background: linear-gradient(90deg, #36c6c6, #000080); position: fixed; z-index: 1;">
+        <header class="d-flex align-items-center justify-content-center justify-content-md-between mb-4 border-bottom">
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 link-secondary" style="color: white; font-size: 30px;">AMA TEAmigos</a>
+                </li>
+                <li><a href="/calendar" class="nav-link px-2" style="color: white;"><i class="bi bi-calendar2"
+                            style="font-size: 30px; color: white; position: absolute; margin-left: 900px;"></i>
+                    </a></li>
+            </ul>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form id="myForm" action="/" method="POST">
+                    <div style="margin-top: 100px;">
+                        <label for="cadIden">Identificador: </label>
+                        <input class="form-control" type="text" name="cadIden" id="cadIden" required
+                            value="<%= body?.cadIden || '' %>" pattern="\d{11}|\d{14}"
+                            title="Digite um CPF (11 dígitos) ou CNPJ (14 dígitos)">
+                        <span id="cadIdenError" class="error"></span><br>
+                    </div>
+                    <div> 
+                        <label for="cadName">Nome completo: </label>
+                        <input class="form-control" type="text" name="cadName" id="cadName" required value="<%=body.cadName%>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadNascimento">Data de nascimento: </label>
+                        <input class="form-control" type="date" name="cadNascimento" id="cadNascimento" required 
+                            value="<%= body.cadNascimento %>" max="<%= new Date().toISOString().split('T')[0] %>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadEnd">Endereço: </label>
+                        <input class="form-control" type="text" name="cadEnd" id="cadEnd" required value="<%=body.cadEnd%>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadEmail">Email: </label>
+                        <input class="form-control" type="email" name="cadEmail" id="cadEmail" value="<%= body?.cadEmail || '' %>" placeholder="exemplo@dominio.com">
+                        <span id="cadEmailError" class="error"></span><br>
+                    </div>
+                    <div> 
+                        <label for="cadTel">Telefone: </label>
+                        <input class="form-control" type="tel" name="cadTel" id="cadTel" required value="<%=body.cadTel%>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadAf1">Afiliação 1: </label>
+                        <input class="form-control" type="text" name="cadAf1" id="cadAf1" required value="<%=body.cadAf1%>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadAf2">Afiliação 2: </label>
+                        <input class="form-control" type="text" name="cadAf2" id="cadAf2" value="<%=body.cadAf2%>"><br>
+                    </div>
+                    <div> 
+                        <label for="cadObs">Observação: </label>
+                        <input class="form-control" type="text" name="cadObs" id="cadObs" value="<%=body.cadObs%>"><br>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+
+function validaCpfCnpj(val) {
+    if (val.length === 11) {
+        var cpf = val.trim().replace(/\D/g, "");
+        if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+        var soma = 0;
+        var resto;
+
+        for (var i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != cpf.charAt(9)) return false;
+
+        soma = 0;
+        for (var i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != cpf.charAt(10)) return false;
+
+        return true;
+    }
+    else if (val.length === 14) {
+        var cnpj = val.trim().replace(/\D/g, "");
+        if (/^(\d)\1{13}$/.test(cnpj)) return false;
+
+        var soma = 0;
+        var peso1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+        var peso2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+        for (var i = 0; i < 12; i++) soma += parseInt(cnpj.charAt(i)) * peso1[i];
+        var resto = soma % 11;
+        var digito1 = resto < 2 ? 0 : 11 - resto;
+
+        soma = 0;
+        for (var i = 0; i < 13; i++) soma += parseInt(cnpj.charAt(i)) * peso2[i];
+        resto = soma % 11;
+        var digito2 = resto < 2 ? 0 : 11 - resto;
+
+        return digito1 === parseInt(cnpj.charAt(12)) && digito2 === parseInt(cnpj.charAt(13));
+    }
+
+    return false;
+}
+
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    var cadIden = document.getElementById("cadIden").value;
+    var cadIdenError = document.getElementById("cadIdenError");
+    var cadEmail = document.getElementById("cadEmail").value;
+    var cadEmailError = document.getElementById("cadEmailError");
+
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+    // Validação CPF/CNPJ
+    if (!validaCpfCnpj(cadIden)) {
+        cadIdenError.textContent = "O CPF ou CNPJ informado é inválido!";
+        event.preventDefault();
+    } else {
+        cadIdenError.textContent = "";
+    }
+
+    // Validação do email
+    if (cadEmail && !emailPattern.test(cadEmail)) {
+        cadEmailError.textContent = "O email informado não é válido!";
+        event.preventDefault();
+    } else {
+        cadEmailError.textContent = "";
+    }
+});
+
+    </script>
+</body>
+
+</html>
